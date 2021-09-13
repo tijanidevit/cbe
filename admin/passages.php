@@ -96,7 +96,7 @@ $exam_id = decrypt($_GET['q']);
                                         <p class="text-muted"> Nisi praesentium similique totam odio obcaecati, reprehenderit,
                                             dignissimos rem temporibus ea inventore alias! Beatae animi nemo ea
                                             tempora, temporibus laborum facilis ut!</p>                                      
-                                            <a href="new-question.php?q=<?php echo $_GET['q']; ?>" class="btn btn-success waves-effect waves-light mt-1">Add new Question</a>
+                                            <a href="new-passage.php?q=<?php echo $_GET['q']; ?>" class="btn btn-success waves-effect waves-light mt-1">Add new passage</a>
                                     </div>
                                 </div><!-- end col -->
                             </div><!-- end row -->
@@ -105,10 +105,10 @@ $exam_id = decrypt($_GET['q']);
                     <div class="col-12">
                         <div class="card-box table-responsive">
                              <?php 
-                              $query = $conn->prepare("SELECT * FROM questions WHERE exam_id='$exam_id' AND active='1' ");
+                              $query = $conn->prepare("SELECT * FROM passages WHERE exam_id='$exam_id' ");
                               $query->execute();
                               if (($query->rowCount()) == 0) {
-                                echo "<h1 class='text-center alert alert-danger'>No question found.</h1>";
+                                echo "<h1 class='text-center alert alert-danger'>No Passages found.</h1>";
                               }else{
                              ?>  
                                 <hr/>                         
@@ -117,7 +117,7 @@ $exam_id = decrypt($_GET['q']);
 
                                     <tr>
                                         <th></th>
-                                        <th>Question</th>
+                                        <th>Passages</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
@@ -127,22 +127,22 @@ $exam_id = decrypt($_GET['q']);
                                     while ($row= $query->fetch(PDO::FETCH_ASSOC)) { $i++; ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $row['question_description']; ?></td>
+                                            <td><?php echo $row['passage']; ?></td>
                                             <td>
                                                 <div class="row">
-                                                    <a  href="#diagnosis-modal<?php echo $row['question_id']; ?>" data-animation="door" data-plugin="custommodal" data-overlayColor="#36404a" class="btn btn-primary btn-block"><i class="fa fa-eye"></i></a>
-                                                <a href="edit-question.php?q=<?php echo encrypt($row['question_id']); ?>&e=<?php echo $_GET['q'] ?>" class="btn btn-warning btn-block"><i class="fa fa-edit"></i></a>
-                                                <a href="actions/trash-question.php?q=<?php echo encrypt($row['question_id']); ?>&e=<?php echo $_GET['q'] ?>" class="btn btn-danger trash-button2 btn-block"><i class="fa fa-trash"></i></a>
+                                                    <a  href="#diagnosis-modal<?php echo $row['id']; ?>" data-animation="door" data-plugin="custommodal" data-overlayColor="#36404a" class="btn btn-primary btn-block"><i class="fa fa-eye"></i></a>
+                                                <a href="edit-passage.php?q=<?php echo encrypt($row['id']); ?>&e=<?php echo $_GET['q'] ?>" class="btn btn-warning btn-block"><i class="fa fa-edit"></i></a>
+                                                <a href="actions/trash-passage.php?q=<?php echo encrypt($row['id']); ?>&e=<?php echo $_GET['q'] ?>" class="btn btn-danger trash-button2 btn-block"><i class="fa fa-trash"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
 
         <!-- Modal -->
-        <div id="diagnosis-modal<?php echo $row['question_id']; ?>" class="modal-demo">
+        <div id="diagnosis-modal<?php echo $row['id']; ?>" class="modal-demo">
                 <button type="button" class="close" onclick="Custombox.modal.close();">
                     <span>&times;</span><span class="sr-only">Close</span>
                 </button>
-                <h4 class="custom-modal-title">Question Details</h4>
+                <h4 class="custom-modal-title">Passage Details</h4>
                 <div class="custom-modal-text">
                   <p><?php echo $row['question_description']; ?></p>
                   <hr/>
