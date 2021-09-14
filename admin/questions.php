@@ -12,10 +12,11 @@ if (($adminQuery->rowCount()) == 0) {
   echo "<h1>  <a href='logout.php'> Something went wrong, please login again</a> </h1>";
 }else{
   $user = $adminQuery->fetch(PDO::FETCH_ASSOC);
-if (!isset($_GET['q']) || empty($_GET['q'])) {
+if (!isset($_GET['p']) || empty($_GET['p'])) {
     header("Location: question-bank.php");
 }
-$exam_id = decrypt($_GET['q']);
+$passage_id = decrypt($_GET['p']);
+$exam_id = decrypt($_GET['e']);
 ?>
 
 <!DOCTYPE html>
@@ -96,7 +97,7 @@ $exam_id = decrypt($_GET['q']);
                                         <p class="text-muted"> Nisi praesentium similique totam odio obcaecati, reprehenderit,
                                             dignissimos rem temporibus ea inventore alias! Beatae animi nemo ea
                                             tempora, temporibus laborum facilis ut!</p>                                      
-                                            <a href="new-question.php?q=<?php echo $_GET['q']; ?>" class="btn btn-success waves-effect waves-light mt-1">Add new Question</a>
+                                            <a href="new-question.php?p=<?php echo $passage_id; ?>&e=<?php echo $exam_id; ?>" class="btn btn-success waves-effect waves-light mt-1">Add new Question</a>
                                     </div>
                                 </div><!-- end col -->
                             </div><!-- end row -->
@@ -105,7 +106,7 @@ $exam_id = decrypt($_GET['q']);
                     <div class="col-12">
                         <div class="card-box table-responsive">
                              <?php 
-                              $query = $conn->prepare("SELECT * FROM questions WHERE exam_id='$exam_id' AND active='1' ");
+                              $query = $conn->prepare("SELECT * FROM questions WHERE exam_id='$exam_id' AND passage_id='$passage_id' ");
                               $query->execute();
                               if (($query->rowCount()) == 0) {
                                 echo "<h1 class='text-center alert alert-danger'>No question found.</h1>";
@@ -131,8 +132,8 @@ $exam_id = decrypt($_GET['q']);
                                             <td>
                                                 <div class="row">
                                                     <a  href="#diagnosis-modal<?php echo $row['question_id']; ?>" data-animation="door" data-plugin="custommodal" data-overlayColor="#36404a" class="btn btn-primary btn-block"><i class="fa fa-eye"></i></a>
-                                                <a href="edit-question.php?q=<?php echo encrypt($row['question_id']); ?>&e=<?php echo $_GET['q'] ?>" class="btn btn-warning btn-block"><i class="fa fa-edit"></i></a>
-                                                <a href="actions/trash-question.php?q=<?php echo encrypt($row['question_id']); ?>&e=<?php echo $_GET['q'] ?>" class="btn btn-danger trash-button2 btn-block"><i class="fa fa-trash"></i></a>
+                                                <!-- <a href="edit-question.php?q=<?php echo encrypt($row['question_id']); ?>&e=<?php echo $exam_id ?>" class="btn btn-warning btn-block"><i class="fa fa-edit"></i></a>
+                                                <a href="actions/trash-question.php?q=<?php echo encrypt($row['question_id']); ?>&e=<?php echo $exam_id ?>" class="btn btn-danger trash-button2 btn-block"><i class="fa fa-trash"></i></a> -->
                                                 </div>
                                             </td>
                                         </tr>

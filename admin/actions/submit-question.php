@@ -22,12 +22,12 @@ if (isset($_POST['submit-question'])) {
     }
     $query = $conn->prepare("INSERT INTO questions(exam_id,passage_id,question_description,options,answer,answer_type,attachment) VALUES('$exam_id','$passage_id','$question_description','$options','$answer','$answer_type','$attachment') ");
     if ($query->execute()) {
-        $_SESSION['response'] = displaySuccess('Information successfully received.');
-        header("Location: ../questions.php?q=" . encrypt($exam_id));
+        $_SESSION['response'] = displaySuccess('Information successfully saved.');
+        header("Location: ../questions.php?p=" . encrypt($passage_id)."&e=" . encrypt($exam_id));
         exit();
     } else {
         $_SESSION['response'] = displayError("Something went wrong. Couldn't perform this operation.");
-        header("Location: ../new-question.php?q=" . encrypt($exam_id));
+        header("Location: ../new-question.php?p=" . encrypt($passage_id)."&e=" . encrypt($exam_id));
         exit();
     }
 
