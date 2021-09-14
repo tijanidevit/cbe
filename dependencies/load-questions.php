@@ -20,7 +20,7 @@ if (isset($_POST['student_id']) and isset($_POST['exam_id'])) {
         $total_questions = $row['total_questions'];
         $course          = getValue('course', 'course_id', 'course_name', $row['course_id']);
 
-        $query = $conn->prepare("SELECT * FROM questions WHERE exam_id='$exam_id' AND active='1' ");
+        $query = $conn->prepare("SELECT * FROM questions JOIN passages ON passages.id = questions.passage_id WHERE exam_id='$exam_id' AND active='1' ");
         $query->execute();
         $rowCount = $query->rowCount();
         if ($rowCount == 0) {
@@ -33,6 +33,7 @@ if (isset($_POST['student_id']) and isset($_POST['exam_id'])) {
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 
                 $question    = $row['question_description'];
+                $passage    = $row['passage'];
                 $optionArray = explode('&&', $row['options']);
                 $options     = [];
 
@@ -62,7 +63,7 @@ if (isset($_POST['student_id']) and isset($_POST['exam_id'])) {
                     $attachment = '0';
                 }
 
-                $single_question = array('q' => $question, 'at' => $attachment, 'ansType' => $answer_type, 'op' => $options, 'ans' => $answer);
+                $single_question = array('q' => $question, 'at' => $attachment, 'ansType' => $answer_type, 'op' => $options, 'ans' => $answer, 'passage' => $passage);
 
                 array_push($questions, $single_question);
 
