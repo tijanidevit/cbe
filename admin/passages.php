@@ -130,9 +130,9 @@ $exam_id = decrypt($_GET['q']);
                                             <td><?php echo $row['passage']; ?></td>
                                             <td>
                                                 <div class="row">
-                                                    <a  href="#diagnosis-modal<?php echo $row['id']; ?>" data-animation="door" data-plugin="custommodal" data-overlayColor="#36404a" class="btn btn-primary btn-block"><i class="fa fa-eye"></i></a>
-                                                <a href="edit-passage.php?q=<?php echo encrypt($row['id']); ?>&e=<?php echo $_GET['q'] ?>" class="btn btn-warning btn-block"><i class="fa fa-edit"></i></a>
-                                                <a href="actions/trash-passage.php?q=<?php echo encrypt($row['id']); ?>&e=<?php echo $_GET['q'] ?>" class="btn btn-danger trash-button2 btn-block"><i class="fa fa-trash"></i></a>
+                                                    <a  href="#diagnosis-modal<?php echo $row['id']; ?>" data-animation="door" data-plugin="custommodal" data-overlayColor="#36404a" class="btn btn-primary"><i class="fa fa-eye"></i></a> &nbsp;
+                                                <a title="Add Question" href="new-question.php?p=<?php echo encrypt($row['id']); ?>&e=<?php echo $_GET['q'] ?>" class=" btn btn-warning"><i class="fa fa-edit"></i></a> &nbsp;
+                                                <a href="actions/trash-passage.php?q=<?php echo encrypt($row['id']); ?>&e=<?php echo $_GET['q'] ?>" class=" btn btn-danger trash-button2"><i class="fa fa-trash"></i></a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -144,35 +144,10 @@ $exam_id = decrypt($_GET['q']);
                 </button>
                 <h4 class="custom-modal-title">Passage Details</h4>
                 <div class="custom-modal-text">
-                  <p><?php echo $row['question_description']; ?></p>
+                  <p><?php echo $row['passage']; ?></p>
                   <hr/>
-                  <h4>Options</h4>
-                  <?php $options = explode('&&', $row['options']);
-                            $k=0;
-                            for ($i=0; $i < count($options) ; $i++) { if ($i >=5 ) break;?>
-                                <?php if (test_input($options[$i]) == '') {
-                                   break;
-                                } ?>
-                               <p><b>Option <?php echo $i+1; ?>  => </b><?php echo $options[$i] ?></p>                                
-                            <?php } ?>
-                            <hr/>
-                            <h4>Answer Type</h4>
-                            <p><?php echo $row['answer_type']; ?></p><hr/>
-                            <h4>Correct Answer</h4>
-                            <?php $answer = explode('&&', $row['answer']);
-                            $k=0;
-                            for ($i=0; $i < count($answer) ; $i++) { if ($i >=5) break;?>
-                                 <?php if (test_input($answer[$i]) == '') {
-                                   break;
-                                } ?>
-                               <p>=> <?php echo $answer[$i] ?></p>                                
-                            <?php } ?>
-                                <hr/>
-                            
-                            <?php if ($row['attachment'] != '0') {?>
-                                <h4>Attachment</h4>
-                            <img src="<?php echo ROOT; ?>uploads/<?php echo $row['attachment']; ?>" style="max-height: 300px;width: auto;margin: auto;" alt="" />
-                        <?php } ?>
+                  <h4>Instruction</h4>
+                  <p><?php echo $row['instructions']; ?></p>
                 </div>
             </div>
                                     <?php } ?>

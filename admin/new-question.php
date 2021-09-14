@@ -13,10 +13,11 @@ if (($adminQuery->rowCount()) == 0) {
 } else {
     $user = $adminQuery->fetch(PDO::FETCH_ASSOC);
 
-    if (!isset($_GET['q']) || empty($_GET['q'])) {
+    if (!isset($_GET['p']) || empty($_GET['p'])) {
     header("Location: question-bank.php");
 }
-$exam_id = decrypt($_GET['q']);
+$passage_id = decrypt($_GET['p']);
+$exam_id = decrypt($_GET['e']);
     ?>
 
 <!DOCTYPE html>
@@ -136,6 +137,7 @@ $exam_id = decrypt($_GET['q']);
                             </div>  
                                         </div>
                                         <input type="hidden" name="no_of_options_filled" id="no_of_options_filled">
+                                        <input type="hidden" name="passage_id" value="<?php echo $passage_id ?>">
                                         <input type="hidden" name="exam_id" value="<?php echo $exam_id ?>">
                                             <!-- Repeater End -->
 
@@ -152,10 +154,10 @@ $exam_id = decrypt($_GET['q']);
                                 <label class="label">Answer <small class="text-danger" id="multiple-answer-tip" style="display: none;">(Seperate multiple answers with <b>&&</b>)</small></label> <br/>
                                 <input type="text" name="answer" class="form-control" required="required"/>
                             </div>
-                            <div class="form-group col-12 col-xs-12">
+                            <!-- <div class="form-group col-12 col-xs-12">
                                 <label class="label">Attachment</label> <br/>
                                 <input type="file" name="attachment" class="form-control" accept="image/*" />
-                            </div>
+                            </div> -->
 
                             <div class="text-right">
                                 <button type="submit" class="btn bg-theme-colored btn-md float-right" name="submit-question">Submit</button>
